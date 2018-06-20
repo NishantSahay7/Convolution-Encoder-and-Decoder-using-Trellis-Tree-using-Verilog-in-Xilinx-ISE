@@ -1,0 +1,233 @@
+module rnd1(I0,I1,I2,x,clk,y
+    );
+input [1:0]I0,I1,I2;
+input clk;
+input [5:0]x;
+output [2:0]y;
+reg [2:0]y;
+reg [5:0]s1=6'b000000,s2=6'b000011,s3=6'b001110,s4=6'b001101,s5=6'b111011,s6=6'b111000,s7=6'b110101,s8=6'b110110;
+reg [2:0]t1=3'b000,t2=3'b001,t3=3'b010,t4=3'b011,t5=3'b100,t6=3'b101,t7=3'b110,t8=3'b111;
+reg [4:0]AO0,AO1,AO2,AO3;
+reg AX0,AX1,AX2,AX3;
+reg [4:0]Acomp0a,Acomp0b,Acomp1a,Acomp1b,Acomp2a,Acomp2b,Acomp3a,Acomp3b;
+///////////////////////////////////////////////////////////////////////////////
+reg [4:0]BO0,BO1,BO2,BO3;
+reg BX0,BX1,BX2,BX3;
+reg [4:0]Bcomp0a,Bcomp0b,Bcomp1a,Bcomp1b,Bcomp2a,Bcomp2b,Bcomp3a,Bcomp3b;
+///////////////////////////////////////////////////////////////////////////////
+reg [4:0]CO0,CO1,CO2,CO3;
+reg CX0,CX1,CX2,CX3;
+reg [4:0]Ccomp0a,Ccomp0b,Ccomp1a,Ccomp1b,Ccomp2a,Ccomp2b,Ccomp3a,Ccomp3b;
+///////////////////////////////////////////////////////////////////////////////
+reg [4:0]XO0,XO1,XO2,XO3;
+reg XX0,XX1,XX2,XX3;
+reg [4:0]Xcomp0a,Xcomp0b,Xcomp1a,Xcomp1b,Xcomp2a,Xcomp2b,Xcomp3a,Xcomp3b;
+
+always@(x)
+begin
+
+     if(x==6'b000000) y<=t1;
+else if(x==6'b000011) y<=t2;
+else if(x==6'b001110) y<=t3;
+else if(x==6'b001101) y<=t4;
+else if(x==6'b111011) y<=t5;
+else if(x==6'b111000) y<=t6;
+else if(x==6'b110101) y<=t7;
+else if(x==6'b110110) y<=t8;
+end
+always@(posedge clk)
+begin
+
+#5 deco(4'b0000,4'b0000,4'b0000,4'b0000,I0,AO0,AO1,AO2,AO3,AX0,AX1,AX2,AX3,Acomp0a,Acomp0b,Acomp1a,Acomp1b,Acomp2a,Acomp2b,Acomp3a,Acomp3b);
+XO0=AX0;
+XO1=AX1;
+XO2=AX2;
+XO3=AX3;
+XX0=AX0;
+XX1=AX1;
+XX2=AX2;
+XX3=AX3;
+Xcomp0a=Acomp0a;
+Xcomp0b=Acomp0b;
+Xcomp1a=Acomp1a;
+Xcomp1b=Acomp1b;
+Xcomp2a=Acomp2a;
+Xcomp2b=Acomp2b;
+Xcomp3a=Acomp3a;
+Xcomp3b=Acomp3b;
+
+#10 deco(XO0,XO1,XO2,XO3,I1,BO0,BO1,BO2,BO3,BX0,BX1,BX2,BX3,Bcomp0a,Bcomp0b,Bcomp1a,Bcomp1b,Bcomp2a,Bcomp2b,Bcomp3a,Bcomp3b);
+XO0=BX0;
+XO1=BX1;
+XO2=BX2;
+XO3=BX3;
+XX0=BX0;
+XX1=BX1;
+XX2=BX2;
+XX3=BX3;
+Xcomp0a=Bcomp0a;
+Xcomp0b=Bcomp0b;
+Xcomp1a=Bcomp1a;
+Xcomp1b=Bcomp1b;
+Xcomp2a=Bcomp2a;
+Xcomp2b=Bcomp2b;
+Xcomp3a=Bcomp3a;
+Xcomp3b=Bcomp3b;
+
+
+#15 deco(XO0,XO1,XO2,XO3,I2,CO0,CO1,CO2,CO3,CX0,CX1,CX2,CX3,Ccomp0a,Ccomp0b,Ccomp1a,Ccomp1b,Ccomp2a,Ccomp2b,Ccomp3a,Ccomp3b);
+XO0=CX0;
+XO1=CX1;
+XO2=CX2;
+XO3=CX3;
+XX0=CX0;
+XX1=CX1;
+XX2=CX2;
+XX3=CX3;
+Xcomp0a=Ccomp0a;
+Xcomp0b=Ccomp0b;
+Xcomp1a=Ccomp1a;
+Xcomp1b=Ccomp1b;
+Xcomp2a=Ccomp2a;
+Xcomp2b=Ccomp2b;
+Xcomp3a=Ccomp3a;
+Xcomp3b=Ccomp3b;
+end
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+task deco;
+
+input [3:0]PT0,PT1,PT2,PT3;
+input[1:0]I;
+output [4:0]O0,O1,O2,O3;
+output X0,X1,X2,X3;
+output [4:0]comp0a,comp0b,comp1a,comp1b,comp2a,comp2b,comp3a,comp3b;
+reg X0,X1,X2,X3;
+reg [4:0]O0,O1,O2,O3;
+reg [4:0]comp0a,comp0b,comp1a,comp1b,comp2a,comp2b,comp3a,comp3b;
+
+reg [1:0]B0a,B1a,B2a,B3a;
+reg [1:0]B0b,B1b,B2b,B3b;
+reg [1:0]Y0a,Y1a,Y2a,Y3a;
+reg [1:0]Y0b,Y1b,Y2b,Y3b;
+
+
+begin
+B0a=I^2'b00;
+B0b=I^2'b11;
+B1a=I^2'b11;
+B1b=I^2'b00;
+B2a=I^2'b10;
+B2b=I^2'b01;
+B3a=I^2'b01;
+B3b=I^2'b10;
+Y0a=B0a[1]+B0a[0];
+Y0b=B0b[1]+B0b[0];
+Y1a=B1a[1]+B1a[0];
+Y1b=B1b[1]+B1b[0];
+Y2a=B2a[1]+B2a[0];
+Y2b=B2b[1]+B2b[0];
+Y3a=B3a[1]+B3a[0];
+Y3b=B3b[1]+B3b[0];
+comp0a=Y0a+PT0;
+comp0b=Y0b+PT2;
+comp1a=Y1a+PT2;
+comp1b=Y1b+PT0;
+comp2a=Y2a+PT3;
+comp2b=Y2b+PT1;
+comp3a=Y3a+PT0;
+comp3b=Y3b+PT0;
+
+
+
+//dot 0
+if (comp0a==comp0b)
+begin
+O0=comp0a;
+ X0=1'b0;
+ end
+ 
+ ///////////////////////////////////////////
+if (comp0a<comp0b)
+begin
+O0=comp0a;
+ X0=1'b0;
+ end
+////////////////////////////////////////
+if (comp0b<comp0a)
+begin
+O0=comp0b;
+ X0=1'b0;
+ end
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//dot 1
+if (comp1a==comp1b)
+begin
+O1=comp1a;
+ X1=1'b1;
+ end
+ 
+ ///////////////////////////////////////////
+if (comp1a<comp1b)
+begin
+O1=comp1a;
+ X1=1'b1;
+ end
+////////////////////////////////////////
+if (comp1b<comp1a)
+begin
+O1=comp1b;
+ X1=1'b1;
+ end
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//dot 2
+if (comp2a==comp2b)
+begin
+O2=comp2a;
+ X2=1'b0;
+ end
+ 
+ ///////////////////////////////////////////
+if (comp2a<comp2b)
+begin
+O2=comp2a;
+ X2=1'b0;
+ end
+////////////////////////////////////////
+if (comp2b<comp2a)
+begin
+O2=comp2b;
+ X2=1'b0;
+ end
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//dot 3
+if (comp3a==comp3b)
+begin
+O3=comp3a;
+ X3=1'b1;
+ end
+ 
+ ///////////////////////////////////////////
+if (comp3a<comp3b)
+begin
+O3=comp3a;
+ X3=1'b1;
+ end
+////////////////////////////////////////
+if (comp3b<comp3a)
+begin
+O3=comp3b;
+ X3=1'b1;
+ end
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+end
+endtask 
+
+endmodule
